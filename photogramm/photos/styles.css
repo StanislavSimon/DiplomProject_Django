@@ -1,0 +1,18 @@
+body {
+    margin: 0;
+    height: 100vh; /* Занять всю высоту окна */
+    display: flex;
+    justify-content: center; /* Центрируем по горизонтали */
+    align-items: center; /* Центрируем по вертикали */
+    background-color: #7976; /* Цвет фона страницы */
+}
+
+.container {
+    text-align: center; /* Центрируем текст внутри контейнера */
+}
+
+.title {
+    font-size: 3em; /* Размер шрифта */
+    color: #345256; /* Цвет текста (например, томатный) */
+    margin: 0; /* Убираем отступы */
+}

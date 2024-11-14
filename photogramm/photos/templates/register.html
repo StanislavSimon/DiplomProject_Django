@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <style>
+        body {
+            background-color: #ffccff; /* Розовый фон */
+            font-family: 'Arial', sans-serif; /* Используйте желаемый шрифт */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center; /* Центрирование текста */
+        }
+        h1 {
+            color: black; /* Черный цвет */
+            font-size: 54px; /* Увеличенный размер шрифта */
+            margin-bottom: 20px; /* Отступ снизу */
+        }
+        .welcome-message {
+            font-size: 24px; /* Размер шрифта для приветственного сообщения */
+            margin-bottom: 30px; /* Отступ снизу */
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block; /* Центрирование формы */
+            text-align: left; /* Выровнять текст в форме по левому краю */
+        }
+        label {
+            display: block; /* Каждый лейбл на новой строке */
+            margin-bottom: 5px; /* Отступ снизу */
+            font-weight: bold; /* Жирный шрифт для лейблов */
+        }
+        input {
+            width: 100%; /* Ширина полей ввода на всю ширину формы */
+            padding: 10px; /* Отступ внутри полей */
+            margin-bottom: 15px; /* Отступ снизу */
+            border: 1px solid #ccc; /* Рамка для полей */
+            border-radius: 5px; /* Закругленные углы */
+        }
+        button {
+            background-color: #007bff; /* Синяя кнопка */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            width: 100%; /* Ширина кнопки на всю ширину формы */
+        }
+        button:hover {
+            background-color: #0056b3; /* Темно-синий при наведении */
+        }
+        p {
+            margin-top: 15px;
+        }
+        a {
+            color: #007bff; /* Цвет ссылки */
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline; /* Подчеркивание ссылки при наведении */
+        }
+    </style>
+</head>
+<body>
+    <h1 class="welcome-message">Добро пожаловать в <span style="color: orange; font-size: 96px;">Фотограмм</span></h1>
+    <h2>Регистрация</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+    <p>Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
+</body>
+</html>

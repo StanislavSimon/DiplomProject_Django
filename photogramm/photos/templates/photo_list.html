@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фотограмм</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            background-color: #ffcccb;
+        }
+        h1 {
+            font-size: 6em;
+            color: #ff6347;
+            text-align: center;
+            margin: 20px 0;
+        }
+        a {
+            font-size: 1.5em;
+            color: white;
+            background-color: #28a745;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-bottom: 20px;
+        }
+        a:hover {
+            background-color: #218838;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 0;
+            margin: 20px;
+            list-style-type: none;
+        }
+        .gallery-item {
+            margin: 10px;
+            text-align: center;
+            width: 600px; /* Увеличена ширина каждого элемента плитки */
+        }
+        img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .comments {
+            margin-top: 10px;
+        }
+        button {
+            font-size: 1em;
+            color: white;
+            background-color: #007bff;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+        .comment-form {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        .delete-button {
+            background-color: red;
+            margin-top: 10px;
+        }
+        .delete-button:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <h1>myФотограмм </h1>
+
+    <a href="{% url 'upload_photo' %}">Загрузить фотографию</a>
+
+    <ul class="gallery">
+        {% for photo in photos %}
+            <li class="gallery-item">
+                <img src="{{ photo.image.url }}" alt="{{ photo.caption }}">
+                <p>{{ photo.caption }}</p>
+
+                <div class="comments">
+                    <h3>Комментарии:</h3>
+                    {% for comment in photo.comments.all %}
+                        <p>{{ comment.text }} - <small>{{ comment.created_at }}</small></p>
+                    {% empty %}
+                        <p>Нет комментариев.</p>
+                    {% endfor %}
+                </div>
+
+                <form method="POST" class="comment-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="photo_id" value="{{ photo.id }}">
+                    <label for="comment_text">Добавить комментарий:</label><br>
+                    <textarea name="text" required></textarea>
+                    {% if comment_form.text.errors %}
+                        <div class="error">
+                            {{ comment_form.text.errors|join:", " }}
+                        </div>
+                    {% endif %}
+                    <button type="submit">Отправить</button>
+                </form>
+
+                <form method="POST" action="{% url 'delete_photo' photo.id %}" style="display: inline;" onsubmit="return confirm('Вы уверены, что хотите удалить это фото?');">
+                    {% csrf_token %}
+                    <button type="submit" class="delete-button">Удалить</button>
+                </form>
+            </li>
+        {% empty %}
+            <li style="text-align: center;">Нет загруженных фотографий.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
